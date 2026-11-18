@@ -21,7 +21,8 @@ export function carregarConfig(): Config {
   const env = process.env;
   return {
     databaseUrl: env.DATABASE_URL ?? 'postgresql://agenda:agenda@localhost:5432/agenda',
-    porta: Number(env.API_PORT ?? 3333),
+    // PORT: definida pela hospedagem (Render); API_PORT: dev local.
+    porta: Number(env.PORT ?? env.API_PORT ?? 3333),
     webOrigin: env.WEB_ORIGIN ?? 'http://localhost:3000',
     producao: env.NODE_ENV === 'production',
     smtp: env.SMTP_HOST ? { host: env.SMTP_HOST, port: Number(env.SMTP_PORT ?? 1025) } : null,
