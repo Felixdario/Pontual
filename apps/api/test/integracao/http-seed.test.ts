@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { relogioDoSistema } from '../../src/infra/relogio';
 import { CONTAS_DEMO, SENHA_DEMO, SLUG_DEMO, semearDemo } from '../../src/infra/seed/demo';
+import { renovarDemoSeDesatualizada } from '../../src/infra/jobs/demo-diaria';
 import { semearPiorCaso } from '../../src/infra/seed/pior-caso';
 import { type ApiDeTeste, criarApi } from './apoio-http';
 
@@ -68,5 +69,25 @@ describe('seed demo', () => {
     expect(r2).toEqual(r1);
     expect(r1.porProfissional['Rafael Moura']).toBe(40);
     expect(depois1 - antes).toBe(Object.values(r1.porProfissional).reduce((a, b) => a + b, 0));
+  });
+});
+
+describe('demo diária', () => {
+  it('refaz a demo só quando ela é de outro dia', async () => {
+    const deps = { hasher: api.deps.hasher, relogio: relogioDoSistema };
+    await semearDemo(api.prisma, { agora: relogioDoSistema.agora(), hasher: api.deps.hasher });
+    expect(await renovarDemoSeDesatualizada(api.prisma, deps)).toBe(false);
+
+    const ontem = new Date(relogioDoSistema.agora() - 26 * 3_600_000);
+    await api.prisma.estabelecimento.update({
+      where: { slug: SLUG_DEMO },
+      data: { criadoEm: ontem },
+    });
+    expect(await renovarDemoSeDesatualizada(api.prisma, deps)).toBe(true);
+
+    const demo = await api.prisma.estabelecimento.findUniqueOrThrow({ where: { slug: SLUG_DEMO } });
+    expect(demo.criadoEm.getTime()).toBeGreaterThan(ontem.getTime() + 3_600_000);
+    expect(await api.prisma.estabelecimento.count({ where: { slug: SLUG_DEMO } })).toBe(1);
+    expect(await renovarDemoSeDesatualizada(api.prisma, deps)).toBe(false);
   });
 });

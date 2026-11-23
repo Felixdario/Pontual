@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { carregarConfig } from './infra/config';
 import { criarDependencias } from './infra/composicao';
 import { criarAplicacao } from './infra/http';
-import { iniciarJobDeLembretes } from './infra/jobs';
+import { iniciarJobDeDemoDiaria, iniciarJobDeLembretes } from './infra/jobs';
 import { criarPrisma } from './infra/prisma';
 
 async function iniciar(): Promise<void> {
@@ -18,8 +18,13 @@ async function iniciar(): Promise<void> {
   app.enableShutdownHooks();
   await app.listen(config.porta);
   console.log(`API em http://localhost:${config.porta} (docs em /docs)`);
+  // Depois do listen: a renovação leva alguns segundos e não deve atrasar a subida.
+  const pararDemo = config.demoRenovarDiaria
+    ? iniciarJobDeDemoDiaria(prisma, deps)
+    : () => undefined;
   const encerrar = async () => {
     pararLembretes();
+    pararDemo();
     await app.close();
     await prisma.$disconnect();
     process.exit(0);

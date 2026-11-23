@@ -9,6 +9,8 @@ export interface Config {
   readonly producao: boolean;
   readonly smtp: { host: string; port: number } | null;
   readonly lembretesAtivos: boolean;
+  /** Só na hospedagem da demo: refaz o estabelecimento demo quando ele é de outro dia. */
+  readonly demoRenovarDiaria: boolean;
 }
 
 export function carregarConfig(): Config {
@@ -27,5 +29,6 @@ export function carregarConfig(): Config {
     producao: env.NODE_ENV === 'production',
     smtp: env.SMTP_HOST ? { host: env.SMTP_HOST, port: Number(env.SMTP_PORT ?? 1025) } : null,
     lembretesAtivos: env.LEMBRETES_ATIVOS !== 'false',
+    demoRenovarDiaria: env.DEMO_RENOVAR_DIARIA === 'true',
   };
 }

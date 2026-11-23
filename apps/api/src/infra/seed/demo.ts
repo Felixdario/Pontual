@@ -16,7 +16,8 @@ export const CONTAS_DEMO = {
   profissional: 'profissional@agenda.dev',
   cliente: 'cliente@agenda.dev',
 } as const;
-const FUSO = 'America/Sao_Paulo';
+export const FUSO_DEMO = 'America/Sao_Paulo';
+const FUSO = FUSO_DEMO;
 const DOMINIO_CLIENTES = 'clientes.navalha.dev';
 
 /** PRNG determinístico (mulberry32): o seed gera sempre a mesma agenda para o mesmo "hoje". */
