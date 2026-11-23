@@ -2,6 +2,8 @@
 
 [Versão em português](README.md)
 
+**Live:** [pontual-zeta.vercel.app](https://pontual-zeta.vercel.app/b/navalha-e-cafe) (free plans: the first visit can take up to a minute).
+
 ![The Pontual dashboard: the day's calendar in one column per staff member, and an appointment's detail with the occupied block (preparation, service and cleanup)](docs/screenshots/painel-detalhe.png)
 
 Pontual is a booking system for businesses that run on appointments (barbershops, salons,
@@ -298,5 +300,4 @@ scripts/demo.mjs  the "run it in 3 commands" script
 
 ## Credits and licence
 
-A portfolio project, the second of four. The licence has not been chosen yet: the repository has no
-licence file for now.
+A portfolio project, the second of four. Licensed under [MIT](LICENSE).

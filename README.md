@@ -2,6 +2,8 @@
 
 [English version](README.en.md)
 
+**No ar:** [pontual-zeta.vercel.app](https://pontual-zeta.vercel.app/b/navalha-e-cafe) (planos grátis: a primeira visita pode levar até um minuto).
+
 ![Painel do Pontual: a agenda do dia em colunas por profissional e o detalhe de um atendimento com o bloco ocupado (preparo, atendimento e limpeza)](docs/screenshots/painel-detalhe.png)
 
 O Pontual é um sistema de agendamento para negócios que vivem de horário marcado (barbearia,
@@ -295,5 +297,4 @@ scripts/demo.mjs  o "rodar em 3 comandos"
 
 ## Créditos e licença
 
-Projeto de portfólio, o segundo de quatro. A licença ainda não foi escolhida: o repositório não tem
-arquivo de licença por enquanto.
+Projeto de portfólio, o segundo de quatro. Licença [MIT](LICENSE).
